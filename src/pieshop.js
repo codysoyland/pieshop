@@ -4,8 +4,8 @@ pieshop.TastyPieBackend = {
     // generate resource objects from given json representation
     'build_resources': function(data, resource_type) {
         var objects = new Array();
-        for (obj in data.results) {
-            var instance = new resource_type(data.results[obj]);
+        for (obj in data.objects) {
+            var instance = new resource_type(data.objects[obj]);
             objects.push(instance);
         }
         return objects;

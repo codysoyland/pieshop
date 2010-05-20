@@ -1,11 +1,11 @@
 Note = pieshop.resource({
-    'resource_uri': '/api/notes/'
+    'resource_uri': '/api/v1/notes/'
 });
 
 test('resource-basic', function () {
-    ok(Note.prototype.resource_uri == '/api/notes/', 'resource URI intact');
+    ok(Note.prototype.resource_uri == '/api/v1/notes/', 'resource URI intact');
     note = new Note({'content': 'This new API rocks da house!'});
-    ok(note.resource_uri == '/api/notes/', 'resource api intact in instance');
+    ok(note.resource_uri == '/api/v1/notes/', 'resource api intact in instance');
     ok(note.content == 'This new API rocks da house!', 'note content preserved');
 });
 
