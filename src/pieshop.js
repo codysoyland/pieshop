@@ -84,8 +84,8 @@ pieshop.Query.prototype = {
     'copy': function(params) {
         var new_query = new pieshop.Query(this.resource);
         for(var i in this) {
-            if(this[i][0] == '_') {
-                new_query[i] = i;
+            if(this.hasOwnProperty(i)) {
+                new_query[i] = this[i];
             }
         }
         for(var i in params) {
@@ -94,9 +94,10 @@ pieshop.Query.prototype = {
         return new_query;
     },
     'limit': function(limit) {
-        return this.copy({
+        var copy = this.copy({
             '_limit':limit,
         });
+        return copy;
     },
     // commenting these out until tests are written
     //'filter': function(params) {

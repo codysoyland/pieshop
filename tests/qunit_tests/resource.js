@@ -27,6 +27,21 @@ test('query-limit', function() {
     ok(limited_query._limit == 10, 'limit is saved on second instance.')
 });
 
+test('query_copy', function() {
+    expect(5);
+
+    query = pieshop.query(Note);
+    equal(typeof(query._limit), 'undefined', 'limit is undefined');
+
+    query2 = query.copy({'_limit': 5});
+    equal(query2._limit, 5, 'new limit is set');
+    equal(typeof(query._limit), 'undefined', 'original limit is still undefined');
+
+    query3 = query2.copy({'method': 'POST'});
+    equal(query3.method, 'POST', 'query3 method is set to POST');
+    equal(query3._limit, 5, 'limit set on query2 still carries over to query3');
+});
+
 asyncTest('query-all', function() {
     query = pieshop.query(Note);
     expect(2);
