@@ -27,7 +27,7 @@ test('query-limit', function() {
     ok(limited_query._limit == 10, 'limit is saved on second instance.')
 });
 
-test('query_copy', function() {
+test('query-copy', function() {
     expect(5);
 
     query = pieshop.query(Note);
@@ -40,6 +40,63 @@ test('query_copy', function() {
     query3 = query2.copy({'method': 'POST'});
     equal(query3.method, 'POST', 'query3 method is set to POST');
     equal(query3._limit, 5, 'limit set on query2 still carries over to query3');
+});
+
+test('query-filter', function() {
+    expect(3);
+
+    query = pieshop.query(Note);
+    equal(typeof(query._filters), 'undefined');
+
+    query = query.filter({'slug__startswith': 'a'});
+    same(query._filters, {'slug__startswith': 'a'});
+
+    query = query.filter({'is_active': true});
+    same(query._filters, {'slug__startswith': 'a', 'is_active': true});
+});
+
+asyncTest('query-filter-startswith', function() {
+    query = pieshop.query(Note);
+    expect(2);
+
+    query.filter({'slug__startswith': 'a'}).all(function(notes) {
+        equal(notes.length, 1, 'only one note has a slug that starts with a');
+        equal(notes[0].slug, 'another-post', 'slug is correct');
+        start();
+    });
+});
+
+asyncTest('query-filter-exact', function() {
+    query = pieshop.query(Note);
+    expect(2);
+
+    query.filter({'slug': 'first-post'}).all(function(notes) {
+        equal(notes.length, 1, 'only one note has that slug');
+        equal(notes[0].slug, 'first-post', 'slug is correct');
+        start();
+    });
+});
+
+asyncTest('query-filter-bool', function() {
+    query = pieshop.query(Note);
+    expect(2);
+
+    query.filter({'is_active': false}).all(function(notes) {
+        equal(notes.length, 1, 'only one note is inactive');
+        equal(notes[0].slug, 'inactive-post', 'slug is correct');
+        start();
+    });
+});
+
+asyncTest('query-filter-multi', function() {
+    query = pieshop.query(Note);
+    expect(2);
+
+    query.filter({'title__endswith': 'Post'}).filter({'is_active': true}).all(function(notes) {
+        equal(notes.length, 1, 'only one post means criteria');
+        equal(notes[0].title, 'Another Post', 'slug is correct');
+        start();
+    });
 });
 
 asyncTest('query-all', function() {

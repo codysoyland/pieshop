@@ -15,5 +15,5 @@ urlpatterns = patterns('',
     (r'(?P<path>pieshop\.js)', 'django.views.static.serve', {
         'document_root': os.path.join(settings.BASE_PATH, '../src/'),
     }),
-    (r'^qunit/', include('django_qunit.urls')),
+    (r'', include('django_qunit.urls')),
 )

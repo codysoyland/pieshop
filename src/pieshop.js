@@ -27,6 +27,11 @@ pieshop.TastyPieBackend = {
         if (query._limit) {
             data.limit = query._limit;
         }
+        if (query._filters) {
+            for (filter in query._filters) {
+                data[filter] = query._filters[filter];
+            }
+        }
         return data;
     },
     // perform given query and execute given callback after query
@@ -99,12 +104,20 @@ pieshop.Query.prototype = {
         });
         return copy;
     },
-    // commenting these out until tests are written
-    //'filter': function(params) {
-    //    return this.copy({
-    //        '_filter':params
-    //    });
-    //},
+    'filter': function(params) {
+        if (this._filters) {
+            var new_params = this._filters;
+        } else {
+            var new_params = {};
+        }
+        for (var i in params) {
+            new_params[i] = params[i];
+        }
+        return this.copy({
+            '_filters':new_params
+        });
+    },
+    // commenting this out until tests are written
     //'delete': function(callback) {
     //    this.method = 'DELETE'
     //    this.resource.prototype.backend.perform(this, callback);
