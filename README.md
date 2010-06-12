@@ -1,39 +1,38 @@
 pieshop
 =======
 
-pieshop is a Javascript client for RESTful APIs. It is being developed as a client for django-tastypie.
+pieshop is a Javascript client for RESTful APIs. It is being developed as a
+client for [django-tastypie](http://github.com/toastdriven/django-tastypie).
 
 (disclaimer: pre-pre-pre alpha unstable untested unfinished and unready)
 
-**more to come! soon, hopefully**
-
-Python dependencies:
+Python dependencies (for running tests)
 
 -   django
 -   django-tastypie
 -   mimeparse
--   django-qunit (only to run unit tests)
+-   django-qunit
 
-Javascript dependencies:
+features
+========
 
--   jQuery
+-   callback-driven chainable query interface inspired by Django's ORM
+-   resource objects (aka "models")
+-   filtering
+-   limit/offset
 
 goals
 =====
 
 The primary goal is to develop a complete Javascript abstraction of the django-tastypie RESTful API. Other goals include:
 
--   removing the jQuery dependency
 -   pluggable backends (more than just django-tastypie)
--   complete filtering/ordering/paginating functionality
 -   support for HTTP methods GET, POST, PUT, and DELETE.
 -   validation/error handling
 -   more delicious pie-themed goodness
 
-this doesn't work
------------------
-
-**but it's coming:**
+Example usage
+=============
 
     Person = pieshop.resource({
         'resource_uri': 'http://mysite.com/api/person/',
