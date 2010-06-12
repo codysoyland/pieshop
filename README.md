@@ -4,8 +4,6 @@ pieshop
 pieshop is a Javascript client for RESTful APIs. It is being developed as a
 client for [django-tastypie](http://github.com/toastdriven/django-tastypie).
 
-(disclaimer: pre-pre-pre alpha unstable untested unfinished and unready)
-
 Python dependencies (for running tests)
 
 -   django
