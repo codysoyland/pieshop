@@ -1,5 +1,8 @@
 Note = pieshop.resource({
-    'resource_uri': '/api/v1/notes/'
+    'resource_uri': '/api/v1/notes/',
+    'slug_uppercase': function() {
+        return this.slug.toUpperCase();
+    }
 });
 
 test('resource-basic', function () {
@@ -7,6 +10,11 @@ test('resource-basic', function () {
     note = new Note({'content': 'This new API rocks da house!'});
     ok(note.resource_uri == '/api/v1/notes/', 'resource api intact in instance');
     ok(note.content == 'This new API rocks da house!', 'note content preserved');
+});
+
+test('resource-methods', function () {
+    note = new Note({'slug': 'test-slug'});
+    equal(note.slug_uppercase(), 'TEST-SLUG', 'resource method works');
 });
 
 test('query-basic', function () {
