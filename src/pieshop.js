@@ -27,6 +27,9 @@ pieshop.TastyPieBackend = {
         if (query._limit) {
             data.limit = query._limit;
         }
+        if (query._offset) {
+            data.offset = query._offset;
+        }
         if (query._filters) {
             for (filter in query._filters) {
                 data[filter] = query._filters[filter];
@@ -100,7 +103,13 @@ pieshop.Query.prototype = {
     },
     'limit': function(limit) {
         var copy = this.copy({
-            '_limit':limit,
+            '_limit': limit,
+        });
+        return copy;
+    },
+    'offset': function(offset) {
+        var copy = this.copy({
+            '_offset': offset,
         });
         return copy;
     },

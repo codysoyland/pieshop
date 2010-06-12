@@ -35,6 +35,14 @@ test('query-limit', function() {
     ok(limited_query._limit == 10, 'limit is saved on second instance.')
 });
 
+test('query-offset', function() {
+    query = pieshop.query(Note);
+    offset_query = query.offset(10);
+
+    ok(offset_query instanceof pieshop.Query, 'offset() returns new query');
+    ok(offset_query._offset == 10, 'offset is saved')
+});
+
 test('query-copy', function() {
     expect(5);
 
@@ -109,11 +117,27 @@ asyncTest('query-filter-multi', function() {
 
 asyncTest('query-all', function() {
     query = pieshop.query(Note);
-    expect(2);
+    expect(3);
 
     query.limit(2).all(function(notes) {
-        ok(notes[0].title == "First Post!", 'title 0 is correct');
-        ok(notes[1].title == "Another Post", 'title 1 is correct');
+        equal(notes.length, 2);
+        equal(notes[0].title, "First Post!", 'title 0 is correct');
+        equal(notes[1].title, "Another Post", 'title 1 is correct');
+        start();
+    });
+});
+
+asyncTest('query-offset-limit', function() {
+    query = pieshop.query(Note);
+    expect(4);
+
+    query = query.limit(1).offset(1);
+    equal(query._limit, 1);
+    equal(query._offset, 1);
+
+    query.limit(1).offset(1).all(function(notes) {
+        equal(notes.length, 1);
+        equal(notes[0].title, "Another Post", 'correct post fetched');
         start();
     });
 });
